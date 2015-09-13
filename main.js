@@ -1,3 +1,5 @@
+// ======= Class =========
+
 var Class = function (parent) {
   var klass = function () {
     this.init.apply(this, arguments);
@@ -45,4 +47,33 @@ var Class = function (parent) {
   
   klass.fn.proxy = klass.proxy;
   return klass;
+}
+
+
+
+// ========= PubSub ==========
+
+var PubSub = {
+  subscribe: function (ev, callback) {
+    var calls = this._callbacks || (this._callbacks = {});
+
+    (this._callbacks[ev] || (this._callbacks[ev] = [])).push(callback);
+    return this;
+  },
+
+  publish: function () {
+    var args = Array.prototype.slice.call(arguments, 0)
+      , ev   = args.shift()
+      , list
+      , calls;
+
+    if (!(calls = this._callbacks)) return this;
+    if (!(list  = this._callbacks[ev])) return this;
+
+    list.forEach(function (callback) {
+      callback.apply(this, args)
+    }.bind(this));
+
+    return this;
+  }
 }
