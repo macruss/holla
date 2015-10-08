@@ -7,6 +7,19 @@
 </head>
 <body>
   
-  <script src="main.js"></script>
+  <script src="js/lib/Math.guid.js"></script>
+  <script src="js/Model.js"></script>
+  <script>
+    var Asset = Model.create();
+    var User = Model.create();
+
+    Asset.attributes = ['name', 'ext'];
+
+    var asset = Asset.init({name: "document", ext: ".txt"});
+
+    asset.save();
+
+    console.log(asset.attributes());
+  </script>
 </body>
 </html>
